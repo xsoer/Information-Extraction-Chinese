@@ -7,13 +7,13 @@ from collections import OrderedDict
 
 import tensorflow as tf
 import numpy as np
-from model import Model
-from loader import load_sentences, update_tag_scheme
-from loader import char_mapping, tag_mapping
-from loader import augment_with_pretrained, prepare_dataset
-from utils import get_logger, make_path, clean, create_model, save_model
-from utils import print_config, save_config, load_config, test_ner
-from data_utils import load_word2vec, create_input, input_from_line, BatchManager
+from NER_IDCNN_CRF.model import Model
+from NER_IDCNN_CRF.loader import load_sentences, update_tag_scheme
+from NER_IDCNN_CRF.loader import char_mapping, tag_mapping
+from NER_IDCNN_CRF.loader import augment_with_pretrained, prepare_dataset
+from NER_IDCNN_CRF.utils import get_logger, make_path, clean, create_model, save_model
+from NER_IDCNN_CRF.utils import print_config, save_config, load_config, test_ner
+from NER_IDCNN_CRF.data_utils import load_word2vec, create_input, input_from_line, BatchManager
 
 flags = tf.app.flags
 flags.DEFINE_boolean("clean",       False,      "clean train folder")

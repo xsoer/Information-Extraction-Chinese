@@ -3,7 +3,7 @@ import numpy as np
 import time
 import datetime
 import os
-import network
+from RE_BGRU_2ATT import network
 from tensorflow.contrib.tensorboard.plugins import projector
 
 FLAGS = tf.app.flags.FLAGS

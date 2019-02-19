@@ -5,7 +5,7 @@ import numpy as np
 import time
 import datetime
 import os
-import network
+from RE_BGRU_2ATT import network
 from sklearn.metrics import average_precision_score
 
 FLAGS = tf.app.flags.FLAGS

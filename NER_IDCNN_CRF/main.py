@@ -1,6 +1,5 @@
 # encoding=utf8
 import os
-import codecs
 import pickle
 import itertools
 from collections import OrderedDict
@@ -13,11 +12,12 @@ from NER_IDCNN_CRF.loader import char_mapping, tag_mapping
 from NER_IDCNN_CRF.loader import augment_with_pretrained, prepare_dataset
 from NER_IDCNN_CRF.utils import get_logger, make_path, clean, create_model, save_model
 from NER_IDCNN_CRF.utils import print_config, save_config, load_config, test_ner
-from NER_IDCNN_CRF.data_utils import load_word2vec, create_input, input_from_line, BatchManager
+from NER_IDCNN_CRF.data_utils import load_word2vec, input_from_line, BatchManager
 
 flags = tf.app.flags
 flags.DEFINE_boolean("clean",       False,      "clean train folder")
 flags.DEFINE_boolean("train",       False,      "Whether train the model")
+
 # configurations for the model
 flags.DEFINE_integer("seg_dim",     20,         "Embedding size for segmentation, 0 if not used")
 flags.DEFINE_integer("char_dim",    100,        "Embedding size for characters")
@@ -27,7 +27,7 @@ flags.DEFINE_string("tag_schema",   "iobes",    "tagging schema iobes or iob")
 # configurations for training
 flags.DEFINE_float("clip",          5,          "Gradient clip")
 flags.DEFINE_float("dropout",       0.5,        "Dropout rate")
-flags.DEFINE_float("batch_size",    20,         "batch size")
+flags.DEFINE_integer("batch_size",    20,         "batch size")
 flags.DEFINE_float("lr",            0.001,      "Initial learning rate")
 flags.DEFINE_string("optimizer",    "adam",     "Optimizer for training")
 flags.DEFINE_boolean("pre_emb",     True,       "Wither use pre-trained embedding")
@@ -49,8 +49,7 @@ flags.DEFINE_string("train_file",   os.path.join("data", "example.train"),  "Pat
 flags.DEFINE_string("dev_file",     os.path.join("data", "example.dev"),    "Path for dev data")
 flags.DEFINE_string("test_file",    os.path.join("data", "example.test"),   "Path for test data")
 
-flags.DEFINE_string("model_type", "idcnn", "Model type, can be idcnn or bilstm")
-#flags.DEFINE_string("model_type", "bilstm", "Model type, can be idcnn or bilstm")
+flags.DEFINE_string("model_type", "bilstm", "Model type, can be idcnn or bilstm")
 
 FLAGS = tf.app.flags.FLAGS
 assert FLAGS.clip < 5.1, "gradient clip should't be too much"
@@ -202,20 +201,19 @@ def evaluate_line():
     with tf.Session(config=tf_config) as sess:
         model = create_model(sess, Model, FLAGS.ckpt_path, load_word2vec, config, id_to_char, logger, False)
         while True:
-            # try:
-            #     line = input("请输入测试句子:")
-            #     result = model.evaluate_line(sess, input_from_line(line, char_to_id), id_to_tag)
-            #     print(result)
-            # except Exception as e:
-            #     logger.info(e)
-
+            try:
                 line = input("请输入测试句子:")
                 result = model.evaluate_line(sess, input_from_line(line, char_to_id), id_to_tag)
                 print(result)
+            except Exception as e:
+                logger.info(e)
+
+                # line = input("请输入测试句子:")
+                # result = model.evaluate_line(sess, input_from_line(line, char_to_id), id_to_tag)
+                # print(result)
 
 
 def main(_):
-
     if FLAGS.train:
         if FLAGS.clean:
             clean(FLAGS)

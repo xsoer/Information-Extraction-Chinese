@@ -28,3 +28,13 @@ Details at [https://github.com/hankcs/ID-CNN-CWS](https://github.com/hankcs/ID-C
 * [zjy-ucas/ChineseNER](https://github.com/zjy-ucas/ChineseNER)
 
 * [koth/kcws](https://github.com/koth/kcws)
+
+
+## 中文语料库
+
+https://github.com/crownpku/Awesome-Chinese-NLP[中文自然语言处理相关资料]
+https://github.com/brightmart/nlp_chinese_corpus[大规模中文自然语言处理语料]
+https://github.com/chinese-poetry/chinese-poetry[最全唐诗集]
+https://github.com/Embedding/Chinese-Word-Vectors[100+ Chinese Word Vectors 上百种预训练中文词向量]
+https://github.com/wainshine/Chinese-Names-Corpus[中文人名语料库。中文姓名,姓氏,名字,称呼,日本人名,翻译人名,英文人名。成语词典。]
+https://github.com/Determined22/zh-NER-TF[]

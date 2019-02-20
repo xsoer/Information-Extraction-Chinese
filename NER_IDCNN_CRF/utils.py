@@ -4,7 +4,7 @@ import shutil
 import logging
 
 import tensorflow as tf
-from .conlleval import return_report
+from NER_IDCNN_CRF.conlleval import return_report
 
 models_path = "./models"
 eval_path = "./evaluation"
@@ -180,7 +180,7 @@ def create_model(session, Model_class, path, load_vec, config, id_to_char, logge
         session.run(tf.global_variables_initializer())
         if config["pre_emb"]:
             emb_weights = session.run(model.char_lookup.read_value())
-            emb_weights = load_vec(config["emb_file"],id_to_char, config["char_dim"], emb_weights)
+            emb_weights = load_vec(config["emb_file"], id_to_char, config["char_dim"], emb_weights)
             session.run(model.char_lookup.assign(emb_weights))
             logger.info("Load pre-trained embedding.")
     return model
@@ -193,7 +193,7 @@ def result_to_json(string, tags):
     idx = 0
     for char, tag in zip(string, tags):
         if tag[0] == "S":
-            item["entities"].append({"word": char, "start": idx, "end": idx+1, "type":tag[2:]})
+            item["entities"].append({"word": char, "start": idx, "end": idx + 1, "type": tag[2:]})
         elif tag[0] == "B":
             entity_name += char
             entity_start = idx
@@ -208,7 +208,3 @@ def result_to_json(string, tags):
             entity_start = idx
         idx += 1
     return item
-
-
-
-

@@ -15,7 +15,7 @@ def load_sentences(path, lower, zeros):
     sentence = []
     num = 0
     for line in codecs.open(path, 'r', 'utf8'):
-        num+=1
+        num += 1
         line = zero_digits(line.rstrip()) if zeros else line.rstrip()
         # print(list(line))
         if not line:
@@ -29,7 +29,7 @@ def load_sentences(path, lower, zeros):
                 word = line.split()
                 # word[0] = " "
             else:
-                word= line.split()
+                word = line.split()
             assert len(word) >= 2, print([word[0]])
             sentence.append(word)
     if len(sentence) > 0:
@@ -100,6 +100,7 @@ def prepare_dataset(sentences, char_to_id, tag_to_id, lower=False, train=True):
 
     def f(x):
         return x.lower() if lower else x
+
     data = []
     for s in sentences:
         string = [w[0] for w in s]
@@ -168,4 +169,3 @@ def load_maps(save_path):
     pass
     # with codecs.open(save_path, "r", encoding="utf8") as f:
     #     pickle.load(save_path, f)
-
